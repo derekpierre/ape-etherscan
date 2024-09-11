@@ -508,8 +508,10 @@ def extract_constructor_arguments(deployment_bytecode: str, runtime_bytecode: st
         # there are no constructor arguments
         return ""
 
+    print(f">>>>> deployment bytecode: \n{deployment_bytecode}\n")
     # Find the start of the runtime bytecode within the deployment bytecode
-    start_index = deployment_bytecode.find(runtime_bytecode)
+    # start_index = deployment_bytecode.find(runtime_bytecode)
+    start_index = deployment_bytecode.rfind("0033")
 
     # If the runtime bytecode is not found within the deployment bytecode,
     # return an error message.
@@ -518,7 +520,9 @@ def extract_constructor_arguments(deployment_bytecode: str, runtime_bytecode: st
 
     # Cut the deployment bytecode at the start of the runtime bytecode
     # The remaining part is the constructor arguments
-    constructor_args_start_index = start_index + len(runtime_bytecode)
-    constructor_arguments = deployment_bytecode[constructor_args_start_index:]
+    # constructor_args_start_index = start_index + len(runtime_bytecode)
+    # constructor_arguments = deployment_bytecode[constructor_args_start_index:]
+    constructor_arguments = deployment_bytecode[start_index + 4 :]
+    print(f">>> Constructor arguments: {constructor_arguments}")
 
     return constructor_arguments
